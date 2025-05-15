@@ -1,10 +1,11 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import os
 
 app = Flask(__name__)
 CORS(app)
 
-# Mocked CafeF data (replace this with real scraping logic)
+# Mocked CafeF data (replace with scraping in production)
 vn_data = {
     "TCB.VN": { "eps": 4500, "pe": 10.2, "pb": 1.3 },
     "VCB.VN": { "eps": 5000, "pe": 12.1, "pb": 1.4 },
@@ -21,4 +22,5 @@ def get_vn_stock():
     return jsonify({ "ticker": ticker, **data })
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
